@@ -26,11 +26,13 @@ fi
 
 if [ "$WITH_TEMPLATES" = "--templates" ]; then
   TEMPLATE_DIR="$HOME/.local/share/godot/export_templates/${VERSION}.${STATUS}"
-  if [ ! -f "$TEMPLATE_DIR/version.txt" ]; then
+  if [ ! -f "$TEMPLATE_DIR/version.txt" ] || \
+     [ ! -f "$TEMPLATE_DIR/web_nothreads_release.zip" ] || \
+     [ ! -f "$TEMPLATE_DIR/web_nothreads_debug.zip" ]; then
     echo "Downloading export templates ${TAG}"
     curl -fsSL -o "$DEST/templates.tpz" "${BASE}/Godot_v${TAG}_export_templates.tpz"
     mkdir -p "$TEMPLATE_DIR"
-    # Only the desktop templates this project exports with.
+    # Only the desktop and single-threaded Web templates this project exports with.
     unzip -q -o -j "$DEST/templates.tpz" \
       "templates/version.txt" \
       "templates/linux_release.x86_64" \
@@ -39,6 +41,8 @@ if [ "$WITH_TEMPLATES" = "--templates" ]; then
       "templates/windows_release_x86_64_console.exe" \
       "templates/windows_debug_x86_64.exe" \
       "templates/windows_debug_x86_64_console.exe" \
+      "templates/web_nothreads_release.zip" \
+      "templates/web_nothreads_debug.zip" \
       -d "$TEMPLATE_DIR"
     rm "$DEST/templates.tpz"
   fi

@@ -14,11 +14,16 @@ Built with **Godot 4.7** (GDScript, no plugins, no external assets).
 
 ## Play it
 
+Play in your browser at **<https://darcys22.github.io/talk-on/>**.
+Use a desktop keyboard and mouse: click the game, then press **Enter** to start.
+
+To run it in the Godot editor:
+
 1. Install [Godot 4.7](https://godotengine.org/download) (standard build).
 2. Open `project.godot` in the editor and press **F5**.
 
 Or download a ready-made build from the **Actions** tab of this repository
-(each run attaches Windows and Linux builds), or from **Releases**.
+(each run attaches Windows, Linux and HTML builds), or from **Releases**.
 
 ## How a strike works
 
@@ -57,7 +62,7 @@ mortars find you. Friendly troops show yellow ground panels.
 
 ```
 project.godot            Godot project file
-export_presets.cfg       Windows and Linux export presets (used by CI)
+export_presets.cfg       Windows, Linux and Web export presets (used by CI)
 scenes/main.tscn         The only scene; everything else is built in code
 scripts/game.gd          Autoload "Game": missions, strike card, scoring
 scripts/radio.gd         Radio state machine and the pilot conversation
@@ -72,6 +77,7 @@ data/aircraft.json       Flights: arrival time, weapon, blast, accuracy
 data/valley.json         Landmarks, roads and the river
 tests/smoke_test.*       Headless end-to-end test run by CI
 tools/                   CI helper scripts
+github-pages/           Pages deployment files and local web preview instructions
 docs/DESIGN.md           Design summary and roadmap
 ```
 
@@ -85,10 +91,17 @@ All tuning numbers are game placeholders, not real-world figures.
 1. **Test**: downloads Godot, imports the project and runs the headless
    smoke test, which loads the real scene, opens every view and flies one
    complete strike through the radio.
-2. **Export**: builds Windows and Linux releases and attaches them to the
-   run as artifacts (`talk-on-windows`, `talk-on-linux`).
-3. **Release**: when you push a tag such as `v0.1.0`, zips both builds and
+2. **Export**: builds Windows, Linux and Web releases and attaches them to the
+   run as artifacts (`talk-on-windows`, `talk-on-linux`, `talk-on-html`). The Web
+   preset generates `build/html/index.html` and the supporting engine files.
+3. **Pages**: on `main`, deploys the HTML build to GitHub Pages. Pull requests
+   and tags build the HTML artifact without replacing the live site.
+4. **Release**: when you push a tag such as `v0.1.0`, zips all three builds and
    publishes them as a GitHub release.
+
+See [`github-pages/README.md`](github-pages/README.md) for Pages setup and
+local browser preview instructions. The source repository can stay private;
+the Pages game is public.
 
 To use a newer Godot, change `GODOT_VERSION` at the top of the workflow.
 
