@@ -1,0 +1,79 @@
+[
+  {
+    "id": "first_light",
+    "title": "First light",
+    "time_limit": 540,
+    "frequency": 47.3,
+    "wind": {"from": 240, "speed": 3},
+    "smoke_rounds": 3,
+    "flights": ["dive_bomber", "fighter"],
+    "orders": [
+      "ENEMY SUPPLY TRUCKS PARKED IN THE OPEN,",
+      "ABOUT 200 M EAST OF THE RED BARN.",
+      "OWN PLATOON HOLDS THE SOUTH END OF THE BRIDGE.",
+      "DESTROY THE TRUCKS."
+    ],
+    "targets": [
+      {"type": "truck", "x": 480, "n": 1010},
+      {"type": "truck", "x": 510, "n": 1000},
+      {"type": "truck", "x": 540, "n": 1015},
+      {"type": "truck", "x": 515, "n": 1035}
+    ],
+    "friendlies": [
+      {"type": "infantry", "x": -20, "n": 1140},
+      {"type": "infantry", "x": 25, "n": 1150}
+    ]
+  },
+  {
+    "id": "crossroads",
+    "title": "Armour at the crossroads",
+    "time_limit": 600,
+    "frequency": 52.8,
+    "wind": {"from": 300, "speed": 7},
+    "smoke_rounds": 3,
+    "flights": ["rocket", "dive_bomber", "level_bomber"],
+    "orders": [
+      "THREE ENEMY TANKS HALTED AT THE CROSSROADS.",
+      "OWN TROOPS DUG IN 250 M SOUTH-WEST OF IT.",
+      "WIND IS FRESH. HEAVY BOMBS WILL DRIFT.",
+      "DESTROY THE TANKS."
+    ],
+    "targets": [
+      {"type": "tank", "x": -30, "n": 830},
+      {"type": "tank", "x": 25, "n": 860},
+      {"type": "tank", "x": 60, "n": 815}
+    ],
+    "friendlies": [
+      {"type": "infantry", "x": -160, "n": 610},
+      {"type": "infantry", "x": -120, "n": 590}
+    ]
+  },
+  {
+    "id": "danger_close",
+    "title": "Danger close",
+    "time_limit": 480,
+    "frequency": 38.6,
+    "wind": {"from": 90, "speed": 10},
+    "smoke_rounds": 2,
+    "flights": ["fighter", "fighter", "rocket"],
+    "orders": [
+      "ENEMY INFANTRY IN A LINE JUST NORTH-EAST OF",
+      "THE CHURCH, FACING SOUTH.",
+      "OWN TROOPS ARE 90 M SOUTH OF THEM. DANGER CLOSE.",
+      "CHOOSE YOUR ATTACK HEADING WITH CARE.",
+      "BREAK THE ATTACK."
+    ],
+    "targets": [
+      {"type": "infantry", "x": -520, "n": 1565},
+      {"type": "infantry", "x": -495, "n": 1560},
+      {"type": "infantry", "x": -470, "n": 1568},
+      {"type": "infantry", "x": -445, "n": 1562},
+      {"type": "infantry", "x": -420, "n": 1566}
+    ],
+    "friendlies": [
+      {"type": "infantry", "x": -540, "n": 1475},
+      {"type": "infantry", "x": -480, "n": 1470},
+      {"type": "infantry", "x": -430, "n": 1478}
+    ]
+  }
+]

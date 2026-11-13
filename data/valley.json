@@ -1,0 +1,17 @@
+{
+  "river_n": 1200,
+  "roads": [
+    {"from": [0, 150], "to": [0, 2500]},
+    {"from": [-1600, 800], "to": [1600, 800]}
+  ],
+  "landmarks": [
+    {"name": "Red barn", "type": "barn", "x": 300, "n": 1000},
+    {"name": "Church", "type": "church", "x": -600, "n": 1500},
+    {"name": "Bridge", "type": "bridge", "x": 0, "n": 1200},
+    {"name": "Water tower", "type": "water_tower", "x": 900, "n": 1700},
+    {"name": "Crossroads", "type": "crossroads", "x": 0, "n": 800},
+    {"name": "Chimney", "type": "chimney", "x": -1100, "n": 900},
+    {"name": "Mill wood", "type": "wood", "x": 700, "n": 600},
+    {"name": "White farm", "type": "farm", "x": 1200, "n": 1100}
+  ]
+}

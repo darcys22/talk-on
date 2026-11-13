@@ -1,0 +1,115 @@
+name: Build
+
+# Every push and pull request: import the project, run the headless smoke
+# test, then export Windows and Linux builds as downloadable artifacts.
+# Pushing a tag like v0.1.0 also publishes the builds as a GitHub release.
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: "4.7.2"
+  GODOT_STATUS: "stable"
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Import and smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Cache Godot editor
+        uses: actions/cache@v6
+        with:
+          path: ~/godot
+          key: godot-editor-${{ env.GODOT_VERSION }}-${{ env.GODOT_STATUS }}
+
+      - name: Install Godot
+        run: bash tools/install_godot.sh "$GODOT_VERSION" "$GODOT_STATUS" "$HOME/godot"
+
+      - name: Import project and run smoke test
+        run: bash tools/ci_check.sh "$HOME/godot/godot"
+
+  export:
+    name: Export ${{ matrix.name }}
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: windows
+            preset: Windows Desktop
+            file: TalkOn.exe
+          - name: linux
+            preset: Linux
+            file: TalkOn.x86_64
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Cache Godot editor and export templates
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/godot
+            ~/.local/share/godot/export_templates
+          key: godot-export-${{ env.GODOT_VERSION }}-${{ env.GODOT_STATUS }}
+
+      - name: Install Godot and export templates
+        run: bash tools/install_godot.sh "$GODOT_VERSION" "$GODOT_STATUS" "$HOME/godot" --templates
+
+      - name: Export ${{ matrix.preset }}
+        run: |
+          mkdir -p "build/${{ matrix.name }}"
+          "$HOME/godot/godot" --headless --path . --import
+          "$HOME/godot/godot" --headless --path . \
+            --export-release "${{ matrix.preset }}" "build/${{ matrix.name }}/${{ matrix.file }}"
+          test -s "build/${{ matrix.name }}/${{ matrix.file }}"
+          test -s "build/${{ matrix.name }}/TalkOn.pck"
+          ls -la "build/${{ matrix.name }}"
+
+      - name: Upload build
+        uses: actions/upload-artifact@v7
+        with:
+          name: talk-on-${{ matrix.name }}
+          path: build/${{ matrix.name }}
+          if-no-files-found: error
+
+  release:
+    name: Publish release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: export
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download builds
+        uses: actions/download-artifact@v8
+        with:
+          path: dist
+
+      - name: Zip builds
+        run: |
+          cd dist
+          chmod +x talk-on-linux/TalkOn.x86_64
+          for dir in talk-on-*; do
+            zip -r "${dir}-${GITHUB_REF_NAME}.zip" "$dir"
+          done
+          ls -la
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.zip \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "TALK-ON $GITHUB_REF_NAME" \
+            --generate-notes

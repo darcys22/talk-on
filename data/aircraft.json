@@ -1,0 +1,47 @@
+{
+  "fighter": {
+    "name": "Strafing fighter",
+    "callsign": "Magpie",
+    "eta": 40,
+    "weapon": "strafe",
+    "length": 200,
+    "radius": 16,
+    "cep": 8,
+    "kills": ["truck", "infantry"],
+    "note": "Fast. Narrow line of fire along the attack heading."
+  },
+  "rocket": {
+    "name": "Rocket attacker",
+    "callsign": "Hornet",
+    "eta": 60,
+    "weapon": "rockets",
+    "count": 4,
+    "radius": 18,
+    "cep": 18,
+    "kills": ["truck", "tank", "infantry"],
+    "note": "Good against vehicles. Small blast."
+  },
+  "dive_bomber": {
+    "name": "Dive bomber",
+    "callsign": "Anvil",
+    "eta": 75,
+    "weapon": "bomb",
+    "radius": 40,
+    "cep": 30,
+    "kills": ["truck", "tank", "infantry", "bunker"],
+    "note": "One heavy bomb. Much more accurate on a smoke mark."
+  },
+  "level_bomber": {
+    "name": "Level bomber",
+    "callsign": "Drover",
+    "eta": 120,
+    "weapon": "stick",
+    "count": 6,
+    "spacing": 45,
+    "radius": 45,
+    "cep": 60,
+    "wind_drift": 8,
+    "kills": ["truck", "tank", "infantry", "bunker"],
+    "note": "A long stick of bombs along the heading. Drifts with wind."
+  }
+}

@@ -1,0 +1,15 @@
+# Godot 4 cache and imported files (rebuilt on first open)
+.godot/
+*.translation
+
+# Export output
+build/
+dist/
+
+# Editor and OS clutter
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
