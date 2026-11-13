@@ -31,4 +31,6 @@ python3 -m http.server 8000 --directory build/html
 Open <http://localhost:8000/>. A web server is required; opening `index.html`
 as a local file will not work. The export uses one thread and the Compatibility
 renderer, so it does not require cross-origin isolation headers or a service worker.
-Use a desktop keyboard and mouse. Click the game, then press Enter to start.
+Use a desktop keyboard and mouse. Click the game, press Enter to start, then
+click to capture the mouse. Escape releases it; click to capture it again when
+returning from a station or pause. Reload the page after quitting.

@@ -24,5 +24,5 @@ func _build() -> void:
 		"",
 		"Every transmission helps the enemy find you. Keep it short.",
 		"",
-		"Press ENTER to start.        Esc quits.",
+		"Press ENTER to start, then click to capture the mouse." if OS.has_feature("web") else "Press ENTER to start.        Esc quits.",
 	]))

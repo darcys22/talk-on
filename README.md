@@ -15,7 +15,9 @@ Built with **Godot 4.7** (GDScript, no plugins, no external assets).
 ## Play it
 
 Play in your browser at **<https://darcys22.github.io/talk-on/>**.
-Use a desktop keyboard and mouse: click the game, then press **Enter** to start.
+Use a desktop keyboard and mouse: click the game, press **Enter** to start,
+then click to capture the mouse. **Esc** releases it; click to capture it again.
+Reload the page after quitting the browser build.
 
 To run it in the Godot editor:
 
@@ -100,8 +102,7 @@ All tuning numbers are game placeholders, not real-world figures.
    publishes them as a GitHub release.
 
 See [`github-pages/README.md`](github-pages/README.md) for Pages setup and
-local browser preview instructions. The source repository can stay private;
-the Pages game is public.
+local browser preview instructions. This repository and the Pages game are public.
 
 To use a newer Godot, change `GODOT_VERSION` at the top of the workflow.
 

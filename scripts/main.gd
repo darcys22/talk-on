@@ -50,13 +50,25 @@ func _process(_delta: float) -> void:
 	hud.binoculars = mode == "walk" and player.binoculars
 	hud.show_crosshair = mode == "walk" and not player.binoculars
 	hud.prompt = ""
-	if mode == "walk":
+	if OS.has_feature("web") and mode in ["walk", "scope"] and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		hud.prompt = "Click to capture mouse  |  Esc to release"
+	elif mode == "walk":
 		var st := tower.station_in_view(player.camera)
 		if not st.is_empty():
 			hud.prompt = "[E]  " + str(st.prompt)
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Web keyboard events are buffered; mouse capture needs a mouse press.
+	if OS.has_feature("web") and mode in ["walk", "scope"]:
+		if event is InputEventMouseButton:
+			var button := event as InputEventMouseButton
+			if button.pressed and button.button_index == MOUSE_BUTTON_LEFT:
+				if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+				return
+		if event is InputEventMouseMotion and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+			return
 	if event is InputEventMouseMotion or event is InputEventMouseButton:
 		if mode == "walk":
 			player.handle_mouse(event)
@@ -115,7 +127,10 @@ func set_mode(new_mode: String) -> void:
 	else:
 		player.camera.make_current()
 	var captured := mode == "walk" or mode == "scope"
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if captured else Input.MOUSE_MODE_VISIBLE
+	if not captured:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	elif not OS.has_feature("web"):
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	Game.paused = mode in ["title", "pause", "debrief"]
 	hud.show_log = mode == "walk" or mode == "scope"
 
